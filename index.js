@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient
   , assert = require('assert');
 
@@ -12,7 +13,7 @@ MongoClient.connect(url, function(err, db) {
 /* start http server */
 function startServer(db) {
   var app = express();
-
+  app.use(bodyParser());
   app.all('/*', function (req, res) {
     var path = req.path;
     if (path.length === 1) {
@@ -34,6 +35,6 @@ function startServer(db) {
     /* call restful method */
     eval('resource.'+ method +'.apply(resource, params)');
   });
-  
+
   app.listen(process.env.PORT);
 }
