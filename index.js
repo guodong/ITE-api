@@ -13,7 +13,8 @@ MongoClient.connect(url, function(err, db) {
 /* start http server */
 function startServer(db) {
   var app = express();
-  app.use(bodyParser());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  
   app.all('/*', function (req, res) {
     var path = req.path;
     if (path.length === 1) {
@@ -31,6 +32,7 @@ function startServer(db) {
     resource.collection = db.collection(pathArr[0]);
     resource.res = res;
     resource.req = req;
+    resource.params = req.params ? req.params : {};
     
     /* call restful method */
     eval('resource.'+ method +'.apply(resource, params)');

@@ -4,7 +4,7 @@ module.exports = {
   get: function(id) {
     var me = this;
     if (!id) {
-      this.collection.find({}).toArray(function(err, docs) {
+      this.collection.find(me.params).toArray(function(err, docs) {
         me.res.send(docs);
       });
       return;
@@ -15,11 +15,14 @@ module.exports = {
     });
   },
   post: function() {
-    var me = this;console.log(me.req.params);
+    var me = this;
     this.collection.insertOne(me.req.body, function (err, r) {
       assert.equal(null, err);
-      me.res.send(r);
-    })
+      me.res.send({
+        result: 0,
+        data: me.req.body
+      });
+    });
   },
   delete: function(id) {
     

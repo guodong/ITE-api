@@ -9,7 +9,7 @@ module.exports = {
     {
       name      : "ite-api",
       script    : "index.js",
-      watch     : true,
+      watch     : ["./"],
       env: {
         MONGO_URL: "mongodb://localhost:27017/ite",
         PORT : 3000
